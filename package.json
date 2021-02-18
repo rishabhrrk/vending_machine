@@ -1,0 +1,26 @@
+{
+  "name": "vending_machine",
+  "version": "1.0.0",
+  "description": "This is the backend for vending machine and holds REST APIs for admin and customer clients. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rishabhrrk/vending_machine.git"
+  },
+  "keywords": [
+    "NodeJS"
+  ],
+  "author": "Rishabh Khanna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rishabhrrk/vending_machine/issues"
+  },
+  "homepage": "https://github.com/rishabhrrk/vending_machine#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
+}
