@@ -7,9 +7,16 @@ class VendingService{
     }
 
     purchased(sodaName, qty, amountPaid){
-        let success = DB.purchaseSoda(sodaName, qty, amountPaid);
-        DB.createDocument();
-        return success;
+        try{
+            let success = DB.purchaseSoda(sodaName, parseInt(qty), Number(parseFloat(amountPaid).toPrecision(3)));
+            if(success){
+                DB.createDocument();
+            }
+            return success;
+        }catch(err){
+            console.log(err);
+            return false;
+        }
     }
 }
 

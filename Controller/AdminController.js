@@ -22,7 +22,7 @@ function getStatus(req, res){
     }
 }
 
-function restock(req, res){
+function changeStock(req, res){
     try{
         let updateStatus = AdminService.restock(req.body.sodaName, req.body.qty);
         if(updateStatus){
@@ -66,4 +66,48 @@ function changePrice(req, res){
     }
 }
 
-module.exports = {getStatus, restock, changePrice};
+function updateInventory(req, res){
+    try{
+        let updateStatus = AdminService.updateInventory(req.body.sodaCollection);
+        if(updateStatus){
+            res.status(200).json({
+                success: true,
+                results: `Update successful`
+            })
+        }
+        else{
+            res.status(400).json({
+                success: false,
+                results: `Failed to update`
+            })
+            throw new Error(`Couldn't update the product : ${req.body}`)
+        }
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+function deleteSoda(req, res){
+    try{
+        let deleteStatus = AdminService.deleteSoda(req.body.sodaName);
+        if(deleteStatus){
+            res.status(200).json({
+                success: true,
+                results: `Delete successful`
+            })
+        }
+        else{
+            res.status(400).json({
+                success: false,
+                results: `Failed to delete`
+            })
+            throw new Error(`Couldn't delete the product : ${req.body}`)
+        }
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+module.exports = {getStatus, changeStock, changePrice, updateInventory, deleteSoda};
