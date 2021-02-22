@@ -8,12 +8,16 @@ There are two modules -
 
 
 For this application the database is a JSON file named SodaCollection.json.<br />
-Multiple vending machines can also be added and for each vending machine a new server needs to be used. However, all vending machines can connect to one single JSON file as database.
+Multiple vending machines can also be added and for each vending machine a new server needs to be used. However, all vending machines can connect to one single JSON file as database.<br />
+<br />
+
 
 A working UI is built for showing the use of APIs. The front-end is built using React, Bootstrap 4, CSS and HTML.
 
 ## Steps to get started
-1. In the root folder a start-script.sh file is provided which starts both the backend on PORT 5001 and front end on PORT 3000. An alternate way to do is run the command ```npm install && cd views && npm install && cd .. && npm run dev``` Default PORT is 5001, to change PORT change PORT variable in .env file. Same should be used in API endpoints. 
+1. In the root folder a start-script.sh file is provided which starts both the backend on PORT 5001 and front end on PORT 3000. An alternate way to do is run the command <br />
+```npm install && cd views && npm install && cd .. && npm run dev```<br />
+ Default PORT is 5001, to change PORT change PORT variable in .env file. Same should be used in API endpoints. 
 2. If the PORT for backend is changed then the same should be used for - 
     1. ROOT variable in {root}/.env file
     2. REACT_APP_URL variable in {root}/views/.env file
@@ -36,7 +40,8 @@ Taking hint from this statement further work can be to build a security mechanis
             "sodaName": "Cola"
         }
         ```
-    2. Change Stock - POST http://localhost:5001/admin/changeStock/
+    2. Change Stock - POST http://localhost:5001/admin/changeStock/<br />
+
         BODY
         ```json
         {
@@ -45,7 +50,8 @@ Taking hint from this statement further work can be to build a security mechanis
         }
         ```
         Here qty is the restock quantity and will be added to existing quantity in vending machine.
-    3. Change Price - POST http://localhost:5001/admin/changePrice/
+    3. Change Price - POST http://localhost:5001/admin/changePrice/<br />
+
         BODY
         ```json
         {
@@ -53,7 +59,8 @@ Taking hint from this statement further work can be to build a security mechanis
             "price": 2.0
         }
         ```
-    4. Bulk edit inventory - POST http://localhost:5001/admin/updateInventory/
+    4. Bulk edit inventory - POST http://localhost:5001/admin/updateInventory/<br />
+
         BODY
         ```json
         [
@@ -74,7 +81,7 @@ Taking hint from this statement further work can be to build a security mechanis
             }
         ]
         ```
-    5. Delete Soda - POST http://localhost/admin/deleteSoda
+    5. Delete Soda - POST http://localhost/admin/deleteSoda/<br />
         BODY
         ```json
         {
@@ -89,7 +96,8 @@ Taking hint from this statement further work can be to build a security mechanis
             "sodaName": "Cola"
         }
         ```
-    2. Purchase - POST http://localhost:5001/vending/purchased/
+    2. Purchase - POST http://localhost:5001/vending/purchased/<br />
+
         BODY
         ```json
         {
