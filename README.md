@@ -36,7 +36,7 @@ Taking hint from this statement further work can be to build a security mechanis
             "sodaName": "Cola"
         }
         ```
-    2. Restock - POST http://localhost:5001/admin/restock/
+    2. Change Stock - POST http://localhost:5001/admin/changeStock/
         BODY
         ```json
         {
@@ -51,6 +51,34 @@ Taking hint from this statement further work can be to build a security mechanis
         {
             "sodaName": "Cola",
             "price": 2.0
+        }
+        ```
+    4. Bulk edit inventory - POST http://localhost:5001/admin/updateInventory/
+        BODY
+        ```json
+        [
+            {
+                "sodaName": "Cola",
+                "qty": 6,
+                "price": 1
+            },
+            {
+                "sodaName": "Cola",
+                "qty": 6,
+                "price": 1
+            },
+            {
+                "sodaName": "Cola",
+                "qty": 6,
+                "price": 1
+            }
+        ]
+        ```
+    5. Delete Soda - POST http://localhost/admin/deleteSoda
+        BODY
+        ```json
+        {
+            "sodaName": "Cola"
         }
         ```
 2. Customer
