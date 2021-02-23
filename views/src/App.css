@@ -36,3 +36,88 @@
     transform: rotate(360deg);
   }
 }
+
+.outer-div{
+  border-width: 10px;
+  border-color: black;
+  height: 800px;
+}
+
+.machine-header{
+  height: 2px;
+  background-color: cornflowerblue;
+  position: relative;
+}
+
+.machine-header-inner{
+  font-weight: bolder;
+  font-size: 100px;
+  width: 100%;
+  padding: 2px;
+}
+
+.machine-lock{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.racks-table-container{
+  align-content: center;
+}
+
+.racks-table{
+  table-layout: fixed;
+}
+
+.display-board{
+  background-color: yellow;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 25px;
+}
+
+.keyboard-outer-div{
+  top: 8px;
+  position: relative;
+}
+
+.keyboard-border{
+  border: 5px solid dimgray;
+}
+
+.collect-change{
+  justify-content: right;
+  padding: 5px;
+}
+
+.change-div{
+  text-align: center;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.admin-panel-table-header{
+  font-size: large;
+  font-weight: bolder;
+}
+
+.admin-panel-vending-total{
+  background-color: lightgreen;
+  font-weight: bolder;
+}
+
+.padding-2px{
+  padding: 2px;
+}
+
+.padding-7px{
+  padding: 7px;
+}
+
+.bg-dimgrey{
+  background-color: dimgray;
+}
+
+.width-100{
+  width: 100%;
+}

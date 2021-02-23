@@ -12,11 +12,13 @@ import ItemForm from "./Components/ItemForm";
 function AdminPanel(props) {
   const url = process.env.REACT_APP_URL;;
 
-  const [data, setData] = useState([]);
-  const [collection, setCollection] = useState([]);
-  const [refresh, setRefresh] = useState(false);
-  const [form, setForm] = useState(false);
+  const [data, setData] = useState([]); // state to fetch data for admin panel
+  const [collection, setCollection] = useState([]); // state which can be manipulated by admin and used for updating inventory
+  const [refresh, setRefresh] = useState(false); // state indicating refresh of the admin panel
+  const [form, setForm] = useState(false); // state which allows visibility of add item modal
 
+  // use effect to fetch status of admin panel
+  // triggered by default and on refresh state
   useEffect(() => {
     axios.get(url + "admin/getStatus/").then((json) => {
       let newState = json.data.results;
@@ -24,13 +26,17 @@ function AdminPanel(props) {
     });
   }, [, refresh]);
 
+  // use effect to fetch status of admin panel
+  // this state can be manipulated by the admin
+  // triggered by default and on refresh state
   useEffect(() => {
     axios.get(url + "admin/getStatus/").then((json) => {
       let newState = json.data.results;
       setCollection(newState);
     });
   }, [, refresh]);
-
+  
+  // function which deletes a soda
   const handleDelete = (sodaName) => {
     axios.post(url + 'admin/deleteSoda/', {
       sodaName: sodaName
@@ -38,6 +44,7 @@ function AdminPanel(props) {
     .catch((err) => console.log(err));
   }
 
+  // function which facilitates changing inventory
   const handleChange = (e) => {
     e.preventDefault();
     axios
@@ -48,11 +55,16 @@ function AdminPanel(props) {
       .catch((err) => console.log(err));
   };
 
+  // function which makes the add item modal visible
   const addNew = (e) => {
     e.preventDefault();
     setForm(true);
   };
 
+  // function which adds a new item
+  // it receives values for a new soda from ItemForm.jsx (add new soda)
+  // this also makes the modal disappear
+  // it is triggered on successful form submission of new item
   const addItem = (name, description, price, qty) => {
     let oldState = { ...collection };
     let size = collection.length;
@@ -72,6 +84,8 @@ function AdminPanel(props) {
     document.querySelector("div.modal-backdrop").remove();
   };
 
+  // JSX which builds the table from the collection and data state
+  // data is the old state and collection state keeps on updating as the admin interacts with the table
   let tableContent = () => {
     let objectKeys = collection != undefined ? Object.keys(collection) : [];
     return objectKeys.map((soda, index) => {
@@ -79,18 +93,18 @@ function AdminPanel(props) {
         return (
           <div className="row" key={index}>
             <FontAwesomeIcon
-            className="col-1"
+            className="col-1 padding-2px"
             border
-            style={{padding: "2px", height: "2em"}}
+            style={{height: "2em"}}
             icon={faTrashAlt}
             onClick={(e) => {
               handleDelete(collection[soda].productName);
             }}
           />
-            <div className="col-2 border" style={{background:"dimgrey"}}>{collection[soda].productName}</div>
-            <div className="col-2 border" style={{padding: "0"}}>
+            <div className="col-2 border bg-dimgrey">{collection[soda].productName}</div>
+            <div className="col-2 border p-0">
               <input
-                style={{ width: "100%" }}
+                className="width-100"
                 type="number"
                 min="0"
                 step="0.01"
@@ -107,11 +121,11 @@ function AdminPanel(props) {
                 }}
               />
             </div>
-            <div className="col-3 border" style={{background:"dimgrey"}}>{data[soda].vendingQuantity}</div>
-            <div className="col-2 border" style={{padding: "0"}}>
+            <div className="col-3 border bg-dimgrey" style={{background:"dimgrey"}}>{data[soda].vendingQuantity}</div>
+            <div className="col-2 border p-0">
               <input
                 type="number"
-                style={{ width: "100%" }}
+                className="width-100"
                 value = {collection[soda].addStock || 0}
                 onChange={(e) => {
                   if (
@@ -128,7 +142,7 @@ function AdminPanel(props) {
                 }}
               />
             </div>
-            <div className="col-2 border" style={{background:"lightgreen", color:"black", fontWeight:"bolder"}}>
+            <div className="col-2 border text-dark admin-panel-vending-total">
               {parseInt(collection[soda].vendingQuantity)}
             </div>
           </div>
@@ -138,27 +152,17 @@ function AdminPanel(props) {
   };
 
   return (
-    <div className="container p-3 my-3 bg-dark border" style={{ height: "800px" }}>
+    <div className="container p-3 my-3 bg-dark border outer-div">
       <div
-        className="row justify-content-center align-content-center jumbotron"
-        style={{
-          height: "2px",
-          backgroundColor: "cornflowerblue",
-          position: "relative",
-        }}
+        className="machine-header row justify-content-center align-content-center jumbotron"
       >
         <div
-          className="h1 justify-content-center align-content-center"
-          style={{
-            fontWeight: "bolder",
-            fontSize: "100px",
-            width: "100%",
-            padding: "2px",
-          }}
-        >
+          className="machine-header-inner h1 justify-content-center align-content-center"
+          >
           Virtual Soda
         </div>
-        <div style={{ position: "absolute", top: "10px", right: "10px" }}>
+        {/* Icon to change the view to Vending Machine from Admin Panel */}
+        <div className="machine-lock">
           <FontAwesomeIcon
             icon={faLockOpen}
             size="2x"
@@ -169,9 +173,10 @@ function AdminPanel(props) {
         </div>
       </div>
 
+            {/* Headers for the display table */}
       <div className="row text-light">
         <div className="container">
-          <div className="row" style={{fontSize:"large", fontWeight:"bolder"}}>
+          <div className="row admin-panel-table-header">
             <div className="col-3 border">Soda Name</div>
             <div className="col-2 border">Price ($)</div>
             <div className="col-3 border">Vending Units Available</div>
@@ -179,7 +184,8 @@ function AdminPanel(props) {
             <div className="col-2 border">Total Units</div>
           </div>
           {tableContent()}<br />
-          <div className="row" style={{justifyContent:"space-evenly"}}>
+          {/* button to save the changes of price and Stock */}
+          <div className="row justify-content-around">
             <FontAwesomeIcon
               icon={faSave}
               size="2x"
@@ -189,6 +195,7 @@ function AdminPanel(props) {
                 handleChange(e);
               }}
             />
+            {/* Button to trigger modal for adding new Soda */}
             <FontAwesomeIcon
               icon={faPlusSquare}
               size="2x"
@@ -201,6 +208,7 @@ function AdminPanel(props) {
               }}
             />
           </div>
+          {/* Compoenent for adding new Soda */}
           {form && <ItemForm addItem={addItem} />}
         </div>
       </div>
