@@ -38,14 +38,15 @@
 }
 
 .outer-div{
-  border-width: 10px;
-  border-color: black;
+  border: lawngreen;
+  border-style: solid;
   height: 800px;
+  width: 850px;
 }
 
 .machine-header{
   height: 2px;
-  background-color: cornflowerblue;
+  background-color: lawngreen;
   position: relative;
 }
 
@@ -54,6 +55,10 @@
   font-size: 100px;
   width: 100%;
   padding: 2px;
+}
+
+.logo{
+  padding-top: 35px;
 }
 
 .machine-lock{
@@ -101,8 +106,13 @@
   font-weight: bolder;
 }
 
+.admin-panel-table-productname{
+  font-weight: bolder;
+  font-size: larger;
+}
+
 .admin-panel-vending-total{
-  background-color: lightgreen;
+  background-color: aquamarine;
   font-weight: bolder;
 }
 

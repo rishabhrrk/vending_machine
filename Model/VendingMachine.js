@@ -64,7 +64,7 @@ class VendingMachine {
       try {
         for (let soda of this.sodaCollection) {
           let name = soda.getProductName();
-          if (name === sodaName && amountPaid === qty * soda.getPrice()) {
+          if (name === sodaName && amountPaid === qty * soda.getPrice() && soda.getVendingQuantity()>=qty) {
             soda.setVendingQuanity(soda.getVendingQuantity() - qty);
             return true;
           }

@@ -5,12 +5,13 @@ import {
   faLockOpen,
   faPlusSquare,
   faSave,
-  faTrashAlt
+  faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import ItemForm from "./Components/ItemForm";
+import logo from "./ColaCo.png";
 
 function AdminPanel(props) {
-  const url = process.env.REACT_APP_URL;;
+  const url = process.env.REACT_APP_URL;
 
   const [data, setData] = useState([]); // state to fetch data for admin panel
   const [collection, setCollection] = useState([]); // state which can be manipulated by admin and used for updating inventory
@@ -35,14 +36,19 @@ function AdminPanel(props) {
       setCollection(newState);
     });
   }, [, refresh]);
-  
+
   // function which deletes a soda
   const handleDelete = (sodaName) => {
-    axios.post(url + 'admin/deleteSoda/', {
-      sodaName: sodaName
-    }).then((res) => {console.log(res); setRefresh(!refresh);})
-    .catch((err) => console.log(err));
-  }
+    axios
+      .post(url + "admin/deleteSoda/", {
+        sodaName: sodaName,
+      })
+      .then((res) => {
+        console.log(res);
+        setRefresh(!refresh);
+      })
+      .catch((err) => console.log(err));
+  };
 
   // function which facilitates changing inventory
   const handleChange = (e) => {
@@ -51,7 +57,10 @@ function AdminPanel(props) {
       .post(url + "admin/updateInventory/", {
         sodaCollection: Object.values(collection),
       })
-      .then((result) => {console.log(result); setRefresh(!refresh);})
+      .then((result) => {
+        console.log(result);
+        setRefresh(!refresh);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -76,9 +85,12 @@ function AdminPanel(props) {
     };
     axios
       .post(url + "admin/updateInventory/", {
-        sodaCollection: [oldState[size]]
+        sodaCollection: [oldState[size]],
       })
-      .then((result) => {console.log(result); setRefresh(!refresh);})
+      .then((result) => {
+        console.log(result);
+        setRefresh(!refresh);
+      })
       .catch((err) => console.log(err));
     setForm(false);
     document.querySelector("div.modal-backdrop").remove();
@@ -93,15 +105,17 @@ function AdminPanel(props) {
         return (
           <div className="row" key={index}>
             <FontAwesomeIcon
-            className="col-1 padding-2px"
-            border
-            style={{height: "2em"}}
-            icon={faTrashAlt}
-            onClick={(e) => {
-              handleDelete(collection[soda].productName);
-            }}
-          />
-            <div className="col-2 border bg-dimgrey">{collection[soda].productName}</div>
+              className="col-1 padding-2px"
+              border
+              style={{ height: "2em" }}
+              icon={faTrashAlt}
+              onClick={(e) => {
+                handleDelete(collection[soda].productName);
+              }}
+            />
+            <div className="col-2 text-truncate border bg-dimgrey">
+              {collection[soda].productName}
+            </div>
             <div className="col-2 border p-0">
               <input
                 className="width-100"
@@ -115,18 +129,24 @@ function AdminPanel(props) {
                     e.target.value != undefined
                   ) {
                     const oldState = { ...collection };
-                    oldState[soda].price = Number(parseFloat(e.target.value).toPrecision(3)) || 0;
+                    oldState[soda].price =
+                      Number(parseFloat(e.target.value).toPrecision(3)) || 0;
                     setCollection(oldState);
                   }
                 }}
               />
             </div>
-            <div className="col-3 border bg-dimgrey" style={{background:"dimgrey"}}>{data[soda].vendingQuantity}</div>
+            <div
+              className="col-3 border bg-dimgrey"
+              style={{ background: "dimgrey" }}
+            >
+              {data[soda].vendingQuantity}
+            </div>
             <div className="col-2 border p-0">
               <input
                 type="number"
                 className="width-100"
-                value = {collection[soda].addStock || 0}
+                value={collection[soda].addStock || 0}
                 onChange={(e) => {
                   if (
                     isNaN(e.target.value) === false &&
@@ -152,14 +172,10 @@ function AdminPanel(props) {
   };
 
   return (
-    <div className="container p-3 my-3 bg-dark border outer-div">
-      <div
-        className="machine-header row justify-content-center align-content-center jumbotron"
-      >
-        <div
-          className="machine-header-inner h1 justify-content-center align-content-center"
-          >
-          Virtual Soda
+    <div className="container p-3 my-3 bg-dark outer-div">
+      <div className="machine-header row justify-content-center align-content-center jumbotron">
+        <div className="navbar-brand justify-content-center align-content-center">
+          <img src={logo} className="logo" width="60%" />
         </div>
         {/* Icon to change the view to Vending Machine from Admin Panel */}
         <div className="machine-lock">
@@ -173,7 +189,7 @@ function AdminPanel(props) {
         </div>
       </div>
 
-            {/* Headers for the display table */}
+      {/* Headers for the display table */}
       <div className="row text-light">
         <div className="container">
           <div className="row admin-panel-table-header">
@@ -183,7 +199,8 @@ function AdminPanel(props) {
             <div className="col-2 border">Change Quantity</div>
             <div className="col-2 border">Total Units</div>
           </div>
-          {tableContent()}<br />
+          {tableContent()}
+          <br />
           {/* button to save the changes of price and Stock */}
           <div className="row justify-content-around">
             <FontAwesomeIcon
@@ -200,7 +217,8 @@ function AdminPanel(props) {
               icon={faPlusSquare}
               size="2x"
               border
-              data-toggle="modal" data-target="#exampleModal"
+              data-toggle="modal"
+              data-target="#exampleModal"
               className="col-2"
               onClick={(e) => {
                 e.preventDefault();
